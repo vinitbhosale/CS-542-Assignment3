@@ -1,3 +1,5 @@
-public class StdoutDisplayInterface {
+package studentskills.util;
+
+public interface StdoutDisplayInterface {
     
 }

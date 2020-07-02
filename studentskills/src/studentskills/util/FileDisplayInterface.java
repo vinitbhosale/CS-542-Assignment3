@@ -1,3 +1,4 @@
-public class FileDisplayInterface {
+package studentskills.util;
+public interface FileDisplayInterface {
     
 }
