@@ -10,6 +10,7 @@ public class StudentRecord {
     private double gpa;
     private String major;
     private Set<String> skills = new HashSet<String>();
+    private String operation;
 
     /**
      * StudentRecord Constructor
@@ -22,7 +23,7 @@ public class StudentRecord {
      * @param inSkills
      */
     public StudentRecord(int inBNumber, String inFirstName, String inLastName, double inGpa, String inMajor,
-            Set<String> inSkills) {
+            Set<String> inSkills, String inOperation) {
 
         bNumber = inBNumber;
         firstName = inFirstName;
@@ -30,14 +31,8 @@ public class StudentRecord {
         gpa = inGpa;
         major = inMajor;
         skills = inSkills;
+        operation = inOperation;
     }
 
-    /**
-     * 
-     * @return
-     */
-    public int getBNumber() {
-        return bNumber;
-    }
     
 }

@@ -2,10 +2,13 @@ package studentskills.processor;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import studentskills.mytree.Node;
+import studentskills.mytree.TreeHelper;
 import studentskills.util.FileProcessor;
 
 public class InputDataProcessor {
@@ -19,10 +22,12 @@ public class InputDataProcessor {
     private double gpa;
     private String major;
     private Set<String> skills ;
+    private List<TreeHelper> treeHelperLst;  
 
-    public InputDataProcessor(FileProcessor inInputFp, FileProcessor inModifyFp) {
+    public InputDataProcessor(FileProcessor inInputFp, FileProcessor inModifyFp, TreeHelper ...treeArr) {
         inputFp = inInputFp;
         modifyFp = inModifyFp;
+        treeHelperLst = Arrays.asList(treeArr);
     }
 
     public void InputFileProcess() throws IOException {
@@ -52,7 +57,15 @@ public class InputDataProcessor {
             if(skills.size()>10){
                 System.err.println("Skills not more than 10");
             }
-            System.out.println(skills);
+            Node replica_Node_0 = new Node(bNumber, firstName, lastName, gpa, major, skills);
+            Node replica_Node_1 = replica_Node_0.clone();
+            Node replica_Node_2 = replica_Node_0.clone();
+            replica_Node_0.registerObserver(replica_Node_1);
+            replica_Node_0.registerObserver(replica_Node_2);
+            treeHelperLst.get(0).insertStudent(replica_Node_0);
+
+
+            
 
             strData = inputFp.poll();
         }

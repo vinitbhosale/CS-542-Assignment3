@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.InvalidPathException;
 
+import studentskills.mytree.TreeHelper;
 import studentskills.processor.InputDataProcessor;
 import studentskills.util.FileProcessor;
 
@@ -23,12 +24,16 @@ public class Driver {
             }
             System.out.println("Hello World! Lets get started with the assignment");
 
+            TreeHelper replica_0 = new TreeHelper();
+            TreeHelper replica_1 = new TreeHelper();
+            TreeHelper replica_2 = new TreeHelper();
+
             // FileProcessor object
             FileProcessor inputFp = new FileProcessor(args[0]);
             FileProcessor modifyFp = new FileProcessor(args[1]);
             
             // InputDataProcessor object with FileProcessor object and ContextI object as parameter.
-			InputDataProcessor iDp = new InputDataProcessor(inputFp, modifyFp);
+			InputDataProcessor iDp = new InputDataProcessor(inputFp, modifyFp, replica_0, replica_1, replica_2);
 
 			// call of the process method in the InputDataprocessor.
             iDp.InputFileProcess();
