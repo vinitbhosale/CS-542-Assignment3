@@ -24,13 +24,15 @@ public class Driver {
             System.out.println("Hello World! Lets get started with the assignment");
 
             // FileProcessor object
-            FileProcessor fp = new FileProcessor(args[0]);
+            FileProcessor inputFp = new FileProcessor(args[0]);
+            FileProcessor modifyFp = new FileProcessor(args[1]);
             
             // InputDataProcessor object with FileProcessor object and ContextI object as parameter.
-			InputDataProcessor iDp = new InputDataProcessor(fp);
+			InputDataProcessor iDp = new InputDataProcessor(inputFp, modifyFp);
 
 			// call of the process method in the InputDataprocessor.
-			iDp.process();
+            iDp.InputFileProcess();
+            //iDp.ModifyFileProcess();
 
 
         } catch (InvalidPathException | IOException e) {
