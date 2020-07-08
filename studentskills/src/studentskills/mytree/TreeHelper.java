@@ -1,49 +1,44 @@
 package studentskills.mytree;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class TreeHelper {
 
-    Node root;
+    private List<Tree> treeList = new ArrayList<Tree>();
 
-    public TreeHelper() {
-        root = null;
+    public TreeHelper(Tree... inTreeArr) {
+        treeList = Arrays.asList(inTreeArr);
     }
 
-    public void insertStudent(Node inNode) {
-        root = insert(root, inNode);
+    public void builTree(StudentRecord st) {
+
+        Node replica_Node_0 = new Node(st);
+        Node replica_Node_1 = replica_Node_0.clone();
+        Node replica_Node_2 = replica_Node_0.clone();
+
+        replica_Node_0.registerObserver(replica_Node_1);
+        replica_Node_0.registerObserver(replica_Node_2);
+
+        replica_Node_1.registerObserver(replica_Node_0);
+        replica_Node_1.registerObserver(replica_Node_2);
+
+        replica_Node_2.registerObserver(replica_Node_1);
+        replica_Node_2.registerObserver(replica_Node_0);
+
+        treeList.get(0).insertStudent(replica_Node_0);
+        treeList.get(1).insertStudent(replica_Node_1);
+        treeList.get(2).insertStudent(replica_Node_2);
+
     }
 
-    public Node insert(Node root, Node inNode) {
-        int bNumKey = inNode.getBNumKey();
-
-        if (null == root) {
-            root = new Node(inNode);
-
-            return root;
-        }
-
-        if (bNumKey < root.getBNumKey()) {
-            root.setLeft(insert(root.getLeftNode(), inNode));
-        } else if (bNumKey > root.getBNumKey()) {
-            root.setRight(insert(root.getRightNode(), inNode));
-        }
-        return root;
-    }
-
-    public Node search(int inBkey) {
-        Node searchKey = root;
-        while(searchKey != null){
-            if(searchKey.getBNumKey() == inBkey){
-                return searchKey;
-            }else if(searchKey.getBNumKey() > inBkey){
-                searchKey.getLeftNode();
-                return searchKey;
-            }else if(searchKey.getBNumKey() < inBkey){
-                searchKey.getRightNode();
-                return searchKey;
-            }
-        }
-        return null;
-        
+    public void printTree() {
+        treeList.get(0).print();
+        System.out.println("------");
+        treeList.get(1).print();
+        System.out.println("------");
+        treeList.get(1).print();
     }
 
 }
