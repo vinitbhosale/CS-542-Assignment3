@@ -2,8 +2,6 @@ package studentskills.mytree;
 
 public class Tree {
     Node root;
-    Node replica_1_Backup;
-    Node replica_2_Backup;
 
     public Tree() {
         root = null;
@@ -17,7 +15,7 @@ public class Tree {
         int bNumKey = inNode.getBNumKey();
 
         if (null == root) {
-            root = new Node(inNode);
+            root = inNode;
             return root;
         }
 
@@ -34,16 +32,15 @@ public class Tree {
     }
 
     public Node search(int inBkey) {
+
         Node searchKey = root;
         while (searchKey != null) {
             if (searchKey.getBNumKey() == inBkey) {
                 return searchKey;
             } else if (searchKey.getBNumKey() > inBkey) {
-                searchKey.getLeftNode();
-                return searchKey;
+                searchKey = searchKey.getLeftNode();
             } else if (searchKey.getBNumKey() < inBkey) {
-                searchKey.getRightNode();
-                return searchKey;
+                searchKey = searchKey.getRightNode();
             }
         }
         return null;
@@ -63,7 +60,7 @@ public class Tree {
         if (root != null) {
 
             inorder(root.getLeftNode());
-            System.out.println(root.getBNumKey());
+            System.out.println(root.getBNumKey()+":"+root.getFirstName()+","+root.getLastName()+","+root.getGpa()+","+root.getMajor()+","+root.getSkills());
             inorder(root.getRightNode());
 
         }

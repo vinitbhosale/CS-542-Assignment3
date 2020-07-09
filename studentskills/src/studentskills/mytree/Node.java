@@ -1,8 +1,11 @@
 package studentskills.mytree;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import studentskills.operation.Operation;
 
 public class Node implements SubjectI, ObserverI, Cloneable {
 
@@ -13,7 +16,7 @@ public class Node implements SubjectI, ObserverI, Cloneable {
   private String lastName;
   private double gpa;
   private String major;
-  Set<String> skills;
+  Set<String> skills = new HashSet<>();
   public List<ObserverI> observers = new ArrayList<>();
   private StudentRecord st;
 
@@ -21,12 +24,6 @@ public class Node implements SubjectI, ObserverI, Cloneable {
     st = inSt;
     this.left = this.right = null;
 
-  }
-
-  public Node(Node inNode) throws NullPointerException {
-    st = inNode.st;
-    this.left = inNode.getLeftNode();
-    this.right = inNode.getRightNode();
   }
 
   /**
@@ -104,9 +101,40 @@ public class Node implements SubjectI, ObserverI, Cloneable {
     this.right = right;
   }
 
+  public void updateNode(StudentRecord inSt) {
+    skills = inSt.getSkills();
+    skills.addAll(st.getSkills());
+    st = inSt;
+    firstName = inSt.getFirstName();
+    lastName = inSt.getLastName();
+    gpa = inSt.getGpa();
+    major = inSt.getMajor();
+  }
+
+  @Override
+  public void update(StudentRecord inSt, Operation inOP) {
+    // TODO Auto-generated method stub
+    if (inOP == Operation.INSERT) {
+      updateNode(inSt);
+      
+    } else if (inOP == Operation.MODIFY) {
+
+    }
+
+  }
+
   @Override
   public void registerObserver(ObserverI observerI) {
+    // TODO Auto-generated method stub
     observers.add(observerI);
+  }
+
+  @Override
+  public void notifyAll(Operation op) {
+    // TODO Auto-generated method stub
+    for (ObserverI observerI : observers) {
+      observerI.update(st, op);
+    }
   }
 
   @Override
