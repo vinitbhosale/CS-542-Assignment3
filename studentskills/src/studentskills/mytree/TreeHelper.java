@@ -6,6 +6,7 @@ import java.util.List;
 
 import studentskills.operation.Operation;
 import studentskills.replica.Replica;
+import studentskills.util.ResultsI;
 
 public class TreeHelper {
 
@@ -15,11 +16,16 @@ public class TreeHelper {
     Node findNode;
 
     private List<Tree> treeList = new ArrayList<Tree>();
-    private Tree tObj;
+    ResultsI rs0;
+    ResultsI rs1;
+    ResultsI rs2;
 
-    public TreeHelper(Tree... inTreeArr) {
+    public TreeHelper(ResultsI inRS0, ResultsI inRS1, ResultsI inRS2, Tree... inTreeArr) {
+        rs0 = inRS0;
+        rs1 = inRS1;
+        rs2 = inRS2;
         treeList = Arrays.asList(inTreeArr);
-        tObj = new Tree();
+
     }
 
     public void builTree(StudentRecord st) {
@@ -36,7 +42,7 @@ public class TreeHelper {
 
             replica_Node_1.registerObserver(replica_Node_0);
             replica_Node_1.registerObserver(replica_Node_2);
-           
+
             replica_Node_2.registerObserver(replica_Node_1);
             replica_Node_2.registerObserver(replica_Node_0);
 
@@ -52,47 +58,42 @@ public class TreeHelper {
 
     }
 
-    public void updateNode(String replicaNum,int ModBNumber,String origValue,String newValue){
+    public void updateNode(String replicaNum, int ModBNumber, String origValue, String newValue) {
         StudentRecord st;
-        
-        if(replicaNum.equals(Replica.ZERO.getreplicaNumString())){
+
+        if (replicaNum.equals(Replica.ZERO.getreplicaNumString())) {
             Node findNode = treeList.get(0).search(ModBNumber);
             st = findNode.gStudentRecord();
-            if(findNode != null){
+            if (findNode != null) {
                 findNode.replaceValue(st, origValue, newValue);
                 findNode.notifyAll(Operation.MODIFY);
-            } 
-        }else if(replicaNum.equals(Replica.ONE.getreplicaNumString())){
+            }
+        } else if (replicaNum.equals(Replica.ONE.getreplicaNumString())) {
             Node findNode = treeList.get(1).search(ModBNumber);
             st = findNode.gStudentRecord();
-            if(findNode != null){
+            if (findNode != null) {
                 findNode.replaceValue(st, origValue, newValue);
                 findNode.notifyAll(Operation.MODIFY);
-            
+
             }
-        }else if(replicaNum.equals(Replica.TWO.getreplicaNumString())){
+        } else if (replicaNum.equals(Replica.TWO.getreplicaNumString())) {
             Node findNode = treeList.get(2).search(ModBNumber);
             st = findNode.gStudentRecord();
-            if(findNode != null){
+            if (findNode != null) {
                 findNode.replaceValue(st, origValue, newValue);
                 findNode.notifyAll(Operation.MODIFY);
-            
+
             }
         }
-        
-
-        
-
-
 
     }
 
-    public void printTree() {
-        treeList.get(0).print();
-        System.out.println("------");
-        treeList.get(1).print();
-        System.out.println("------");
-        treeList.get(1).print();
+    public void storeTreeResult() {
+        treeList.get(0).print(rs0);
+
+        treeList.get(1).print(rs1);
+
+        treeList.get(1).print(rs2);
     }
 
 }

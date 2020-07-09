@@ -1,5 +1,7 @@
 package studentskills.mytree;
 
+import studentskills.util.ResultsI;
+
 public class Tree {
     Node root;
 
@@ -47,8 +49,8 @@ public class Tree {
 
     }
 
-    public void print() {
-        inorder(root);
+    public void print(ResultsI rs) {
+        inorder(root, rs);
     }
 
     /**
@@ -56,12 +58,14 @@ public class Tree {
      * 
      * @param root
      */
-    public void inorder(Node root) {
+    public void inorder(Node root, ResultsI rs) {
+
         if (root != null) {
 
-            inorder(root.getLeftNode());
-            System.out.println(root.getBNumKey()+":"+root.getFirstName()+","+root.getLastName()+","+root.getGpa()+","+root.getMajor()+","+root.getSkills());
-            inorder(root.getRightNode());
+            inorder(root.getLeftNode(), rs);
+            rs.storeResult(root.getBNumKey() + ":" + root.getFirstName() + "," + root.getLastName() + ","
+                    + root.getGpa() + "," + root.getMajor() + "," + root.getSkills());
+            inorder(root.getRightNode(), rs);
 
         }
     }

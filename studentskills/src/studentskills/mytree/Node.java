@@ -1,6 +1,6 @@
 package studentskills.mytree;
 
-import java.lang.reflect.Field;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -12,11 +12,6 @@ public class Node implements SubjectI, ObserverI, Cloneable {
 
   private Node left;
   private Node right;
-  private int bNumber;
-  private String firstName;
-  private String lastName;
-  private double gpa;
-  private String major;
   Set<String> skills = new HashSet<>();
   public List<ObserverI> observers = new ArrayList<>();
   private StudentRecord st;
@@ -24,7 +19,7 @@ public class Node implements SubjectI, ObserverI, Cloneable {
   public Node(StudentRecord inSt) {
     st = inSt;
     this.left = this.right = null;
-    }
+  }
 
   /**
    * @return
@@ -100,7 +95,8 @@ public class Node implements SubjectI, ObserverI, Cloneable {
   public void setRight(Node right) {
     this.right = right;
   }
-  public StudentRecord gStudentRecord(){
+
+  public StudentRecord gStudentRecord() {
     return st;
   }
 
@@ -110,22 +106,21 @@ public class Node implements SubjectI, ObserverI, Cloneable {
     st.getSkills().addAll(skills);
   }
 
-  public void replaceValue(StudentRecord inSt, String inOgValue, String inNewValue){
-    System.out.println(inOgValue+" "+inNewValue);
-    if(inSt.getFirstName().matches(inOgValue)){
+  public void replaceValue(StudentRecord inSt, String inOgValue, String inNewValue) {
+    if (inSt.getFirstName().matches(inOgValue)) {
       inSt.setFirstName(inNewValue);
-      System.out.println(inSt.getFirstName());
-    }else if(inSt.getLastName().matches(inOgValue)){
+
+    } else if (inSt.getLastName().matches(inOgValue)) {
       inSt.setLastName(inNewValue);
-      System.out.println(inSt.getLastName());
-    }else if(st.getMajor().matches(inOgValue)){
+
+    } else if (st.getMajor().matches(inOgValue)) {
       inSt.setMajor(inNewValue);
-      System.out.println(inSt.getMajor());
-    }else if(inSt.getSkills().contains(inOgValue)){
+
+    } else if (inSt.getSkills().contains(inOgValue)) {
       inSt.getSkills().add(inNewValue);
-      System.out.println(inSt.getSkills());
+
     }
-    
+
   }
 
   @Override
@@ -133,7 +128,7 @@ public class Node implements SubjectI, ObserverI, Cloneable {
     // TODO Auto-generated method stub
     if (inOP == Operation.INSERT) {
       updateNode(inSt);
-      
+
     } else if (inOP == Operation.MODIFY) {
       updateNode(inSt);
     }
