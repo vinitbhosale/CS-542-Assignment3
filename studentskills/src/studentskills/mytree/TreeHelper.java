@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import studentskills.operation.Operation;
+import studentskills.replica.Replica;
 
 public class TreeHelper {
 
@@ -48,6 +49,41 @@ public class TreeHelper {
             findNode.notifyAll(Operation.INSERT);
 
         }
+
+    }
+
+    public void updateNode(String replicaNum,int ModBNumber,String origValue,String newValue){
+        StudentRecord st;
+        
+        if(replicaNum.equals(Replica.ZERO.getreplicaNumString())){
+            Node findNode = treeList.get(0).search(ModBNumber);
+            st = findNode.gStudentRecord();
+            if(findNode != null){
+                findNode.replaceValue(st, origValue, newValue);
+                findNode.notifyAll(Operation.MODIFY);
+            } 
+        }else if(replicaNum.equals(Replica.ONE.getreplicaNumString())){
+            Node findNode = treeList.get(1).search(ModBNumber);
+            st = findNode.gStudentRecord();
+            if(findNode != null){
+                findNode.replaceValue(st, origValue, newValue);
+                findNode.notifyAll(Operation.MODIFY);
+            
+            }
+        }else if(replicaNum.equals(Replica.TWO.getreplicaNumString())){
+            Node findNode = treeList.get(2).search(ModBNumber);
+            st = findNode.gStudentRecord();
+            if(findNode != null){
+                findNode.replaceValue(st, origValue, newValue);
+                findNode.notifyAll(Operation.MODIFY);
+            
+            }
+        }
+        
+
+        
+
+
 
     }
 

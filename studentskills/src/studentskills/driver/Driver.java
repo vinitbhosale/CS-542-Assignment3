@@ -41,7 +41,7 @@ public class Driver {
 
             // call of the process method in the InputDataprocessor.
             iDp.InputFileProcess();
-            // iDp.ModifyFileProcess();
+            iDp.ModifyFileProcess();
 
         } catch (InvalidPathException | IOException e) {
 

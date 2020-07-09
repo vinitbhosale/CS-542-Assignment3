@@ -1,5 +1,6 @@
 package studentskills.mytree;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -23,8 +24,7 @@ public class Node implements SubjectI, ObserverI, Cloneable {
   public Node(StudentRecord inSt) {
     st = inSt;
     this.left = this.right = null;
-
-  }
+    }
 
   /**
    * @return
@@ -100,15 +100,32 @@ public class Node implements SubjectI, ObserverI, Cloneable {
   public void setRight(Node right) {
     this.right = right;
   }
+  public StudentRecord gStudentRecord(){
+    return st;
+  }
 
   public void updateNode(StudentRecord inSt) {
-    skills = inSt.getSkills();
-    skills.addAll(st.getSkills());
+    skills = st.getSkills();
     st = inSt;
-    firstName = inSt.getFirstName();
-    lastName = inSt.getLastName();
-    gpa = inSt.getGpa();
-    major = inSt.getMajor();
+    st.getSkills().addAll(skills);
+  }
+
+  public void replaceValue(StudentRecord inSt, String inOgValue, String inNewValue){
+    System.out.println(inOgValue+" "+inNewValue);
+    if(inSt.getFirstName().matches(inOgValue)){
+      inSt.setFirstName(inNewValue);
+      System.out.println(inSt.getFirstName());
+    }else if(inSt.getLastName().matches(inOgValue)){
+      inSt.setLastName(inNewValue);
+      System.out.println(inSt.getLastName());
+    }else if(st.getMajor().matches(inOgValue)){
+      inSt.setMajor(inNewValue);
+      System.out.println(inSt.getMajor());
+    }else if(inSt.getSkills().contains(inOgValue)){
+      inSt.getSkills().add(inNewValue);
+      System.out.println(inSt.getSkills());
+    }
+    
   }
 
   @Override
@@ -118,7 +135,7 @@ public class Node implements SubjectI, ObserverI, Cloneable {
       updateNode(inSt);
       
     } else if (inOP == Operation.MODIFY) {
-
+      updateNode(inSt);
     }
 
   }

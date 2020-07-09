@@ -22,7 +22,13 @@ public class InputDataProcessor {
     private double gpa;
     private String major;
     private Set<String> skills;   
-    private TreeHelper tH; 
+    private TreeHelper tH;
+    private String replicaNum;
+    private int ModBNumber;
+    private String origValue;
+    private String newValue;
+
+
 
     public InputDataProcessor(FileProcessor inInputFp, FileProcessor inModifyFp, TreeHelper inTH) {
         inputFp = inInputFp;
@@ -76,8 +82,26 @@ public class InputDataProcessor {
         }
 
         while(strData != null){
+            
+            if (strData.split(":").length == 1) {
+                System.err.println("Invalid Input! Line in the input file does not follow the specified format.");
+            }
+            String[] keyAndValue = strData.split(":");
+            newValue = keyAndValue[1];
+            ArrayList<String> ModInnerValue = new ArrayList<String>();
+            for (String value : keyAndValue[0].split(",")) {
+                ModInnerValue.add(value);
+            }
+            replicaNum = ModInnerValue.get(0);
+            ModBNumber = Integer.parseInt(ModInnerValue.get(1));
+            origValue = ModInnerValue.get(2);
 
+            //System.out.println(replicaNum+" "+ModBNumber+" "+origValue+" "+newValue);
+            tH.updateNode(replicaNum,ModBNumber,origValue,newValue);
+            strData = modifyFp.poll();
         }
+        System.out.println("------------------------Modified tree----------------------------------");
+        tH.printTree();   
     }
 
 }
