@@ -27,7 +27,6 @@ public class TreeHelper {
     private ResultsI rs0;
     private ResultsI rs1;
     private ResultsI rs2;
-    private ResultsI errRs;
 
     /**
      * TreeHelper constructor
@@ -35,15 +34,13 @@ public class TreeHelper {
      * @param inRS0     - ResultsI obj for replica_0 tree.
      * @param inRS1     - ResultsI obj for replica_1 tree.
      * @param inRS2     - ResultsI obj for replica_2 tree.
-     * @param inErrRs   - ResultsI obj
      * @param inTreeArr - Tree obj datatype to store all 3 trees.
      */
-    public TreeHelper(ResultsI inRS0, ResultsI inRS1, ResultsI inRS2, ResultsI inErrRs, Tree... inTreeArr) {
+    public TreeHelper(ResultsI inRS0, ResultsI inRS1, ResultsI inRS2, Tree... inTreeArr) {
         MyLogger.writeMessage("TreeHelper constructor.", MyLogger.DebugLevel.CONSTRUCTOR);
         rs0 = inRS0;
         rs1 = inRS1;
         rs2 = inRS2;
-        errRs = inErrRs;
         treeList = Arrays.asList(inTreeArr);
 
     }

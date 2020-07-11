@@ -74,7 +74,7 @@ public class Driver {
              * 
              * @params ResultsI, and three tree objects.
              */
-            TreeHelper tH = new TreeHelper(rs0, rs1, rs2, errRs,replica_0, replica_1, replica_2);
+            TreeHelper tH = new TreeHelper(rs0, rs1, rs2, replica_0, replica_1, replica_2);
 
             /**
              * FileProcessor objects for Input and Modify file
