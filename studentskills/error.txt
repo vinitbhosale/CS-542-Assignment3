@@ -1,2 +1,0 @@
-studentskills.userException.ErroFileException: -1234 Negative Bnumber/Not a 4 digit Bnumber read!
-studentskills.userException.ErroFileException: 1134 No such student record in replica_0 tree
