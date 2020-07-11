@@ -1,7 +1,7 @@
 .*
 !.gitignore
 **/BUILD/
+**/error.txt
 **/output1.txt
 **/output2.txt
 **/output3.txt
-**/error.txt
