@@ -27,6 +27,7 @@ public class Results implements FileDisplayInterface, StdoutDisplayInterface, Re
      * @param inOpFile - output file
      */
     public Results(String inOpFile) {
+        MyLogger.writeMessage("Results Constructor", MyLogger.DebugLevel.CONSTRUCTOR);
         filePath = inOpFile;
     }
 
@@ -37,6 +38,7 @@ public class Results implements FileDisplayInterface, StdoutDisplayInterface, Re
      */
     @Override
     public void storeResult(String inResString) {
+        MyLogger.writeMessage("Storing results\n", MyLogger.DebugLevel.RESULTS);
         result = result.concat(inResString + "\n");
     }
 
@@ -45,6 +47,7 @@ public class Results implements FileDisplayInterface, StdoutDisplayInterface, Re
      */
     @Override
     public void writeToStdout() {
+        MyLogger.writeMessage("Writing result to Stdout.\n", MyLogger.DebugLevel.RESULTS);
         // TODO Auto-generated method stub
         System.out.println(result);
 
@@ -57,6 +60,7 @@ public class Results implements FileDisplayInterface, StdoutDisplayInterface, Re
      */
     @Override
     public void writeToFile() throws IOException {
+        MyLogger.writeMessage("Writing result to output file.", MyLogger.DebugLevel.RESULTS);
         // TODO Auto-generated method stub
         outputFile = new File(filePath);
         if (!outputFile.exists()) {

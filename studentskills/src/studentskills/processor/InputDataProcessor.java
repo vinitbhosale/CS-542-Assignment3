@@ -13,6 +13,7 @@ import studentskills.userException.EmptyModifyFileException;
 import studentskills.userException.ErroFileException;
 import studentskills.userException.InvalidInputFormatException;
 import studentskills.util.FileProcessor;
+import studentskills.util.MyLogger;
 import studentskills.util.ResultsI;
 
 /**
@@ -53,6 +54,7 @@ public class InputDataProcessor {
      * @param inTH       - TreeHelper obj.
      */
     public InputDataProcessor(FileProcessor inInputFp, FileProcessor inModifyFp, TreeHelper inTH, ResultsI inErrRs) {
+        MyLogger.writeMessage("InputDataProcessor Constructor", MyLogger.DebugLevel.CONSTRUCTOR);
         inputFp = inInputFp;
         modifyFp = inModifyFp;
         tH = inTH;
@@ -67,13 +69,14 @@ public class InputDataProcessor {
      * @throws InvalidInputFormatException
      */
     public void InputFileProcess() throws IOException, EmptyInputFileException, InvalidInputFormatException {
-
+        MyLogger.writeMessage("Processing Input file.", MyLogger.DebugLevel.INPUTDATAPROCESSOR);
         // Calling the poll method to fetch each line in input file.
         strData = inputFp.poll();
         // Condition to check Empty input file.
         if (null == strData) {
             throw new EmptyInputFileException("Empty Input File!");
         }
+        MyLogger.writeMessage("Reading Input file line by line.", MyLogger.DebugLevel.INPUTDATAPROCESSOR);
         // looping through input file.
         while (strData != null) {
 
@@ -95,7 +98,7 @@ public class InputDataProcessor {
                  */
                 int bNumberLen = Integer.toString(bNumber).length();
                 if (bNumber < 0 && bNumberLen > 4) {
-                    throw new ErroFileException(bNumber+" Negative Bnumber/Not a 4 digit Bnumber read!");
+                    throw new ErroFileException(bNumber + " Negative Bnumber/Not a 4 digit Bnumber read!");
                 }
 
                 // List creation for adding value after(:).
@@ -115,12 +118,13 @@ public class InputDataProcessor {
                 List<String> sub_List = innerValue.subList(4, innerValue.size());
                 skills = new HashSet<String>(sub_List);
                 if (skills.size() > 10) {
-                    throw new ErroFileException(bNumber+" Skills cannot be more than 10!");
+                    throw new ErroFileException(bNumber + " Skills cannot be more than 10!");
                 }
-
+                MyLogger.writeMessage("Creating Student record.", MyLogger.DebugLevel.INPUTDATAPROCESSOR);
                 // Creating the student record.
                 StudentRecord st = new StudentRecord(bNumber, firstName, lastName, gpa, major, skills);
                 // Sending student record to built tree.
+                MyLogger.writeMessage("Sending student record to tree.\n", MyLogger.DebugLevel.INPUTDATAPROCESSOR);
                 tH.builTree(st);
 
                 // Fetching the next line in the input file.
@@ -144,22 +148,24 @@ public class InputDataProcessor {
      * @throws InvalidInputFormatException
      */
     public void ModifyFileProcess() throws IOException, EmptyModifyFileException, InvalidInputFormatException {
+        MyLogger.writeMessage("Processing Modify file.", MyLogger.DebugLevel.INPUTDATAPROCESSOR);
         // Calling the poll method to fetch each line in modify file.
         strData = modifyFp.poll();
         // Condition to check Empty modify file.
         if (null == strData) {
             throw new EmptyModifyFileException("Empty Modify file!");
         }
-        try{
-                // looping through input file.
-            while (strData != null) {
+        MyLogger.writeMessage("Reading Modify file line by line.", MyLogger.DebugLevel.INPUTDATAPROCESSOR);
+        // looping through input file.
+        while (strData != null) {
+            try {
                 // Empty line condition and continue reading next line.
                 if (strData.length() == 0) {
                     strData = modifyFp.poll();
                 }
                 // Condition to check the required format of line.
                 if (strData.split(":").length == 1) {
-                    throw new InvalidInputFormatException("Invalid Input! Line in the input file does not follow the specified format.");
+                    throw new ErroFileException("Modified value is empty!");
                 }
 
                 String[] keyAndValue = strData.split(":");
@@ -171,34 +177,29 @@ public class InputDataProcessor {
                 }
                 replicaNum = ModInnerValue.get(0);
                 ModBNumber = Integer.parseInt(ModInnerValue.get(1));
-
-                // Empty value after (:)
-                if (newValue.isEmpty()) {
-                    throw new ErroFileException(ModBNumber+" Modified value is empty!");
-                }
                 /**
                  * To check bnumber is negative and length is than 4.
                  */
                 int ModBNumberLen = Integer.toString(ModBNumber).length();
                 if (bNumber < 0 && ModBNumberLen > 4) {
-                    throw new ErroFileException(bNumber+" Negative Bnumber/Bnumber more than 4 digit!");
+                    throw new ErroFileException(bNumber + " Negative Bnumber/Bnumber more than 4 digit!");
                 }
                 origValue = ModInnerValue.get(2);
-
+                MyLogger.writeMessage("Sending value to update student record node in tree.\n",
+                        MyLogger.DebugLevel.INPUTDATAPROCESSOR);
                 tH.updateNode(replicaNum, ModBNumber, origValue, newValue);
                 strData = modifyFp.poll();
-            }
-        }catch(ErroFileException e){
-            errRs.storeResult(e.toString());
+
+            } catch (ErroFileException e) {
+                errRs.storeResult(e.toString());
                 // Fetching the next line in the input file.
                 strData = modifyFp.poll();
+            }
+
         }
-        
-        
-        
 
     }
-
+    
     public void generateOutput() {
         tH.storeTreeResult();
     }

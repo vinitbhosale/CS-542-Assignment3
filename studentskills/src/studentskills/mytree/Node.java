@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import studentskills.operation.Operation;
+import studentskills.util.MyLogger;
 
 /**
  * Node class that implements SubjectI, ObserverI, Cloneable interface and
@@ -28,6 +29,7 @@ public class Node implements SubjectI, ObserverI, Cloneable {
    * @param inSt - StudentRecord obj
    */
   public Node(StudentRecord inSt) {
+    MyLogger.writeMessage("Node Constructor", MyLogger.DebugLevel.CONSTRUCTOR);
     st = inSt;
     this.left = this.right = null;
   }
@@ -137,6 +139,7 @@ public class Node implements SubjectI, ObserverI, Cloneable {
    * @param inSt - student record
    */
   public void updateNode(StudentRecord inSt) {
+    MyLogger.writeMessage("Node updated from Input file.\n", MyLogger.DebugLevel.NODE);
     // fetch old values of skills
     skills = st.getSkills();
     // update the student
@@ -153,6 +156,7 @@ public class Node implements SubjectI, ObserverI, Cloneable {
    * @param inNewValue - new value
    */
   public void replaceValue(StudentRecord inSt, String inOgValue, String inNewValue) {
+    MyLogger.writeMessage("Node value updated from modify file.\n", MyLogger.DebugLevel.CONSTRUCTOR);
     // Condition to check which value to change
     if (inSt.getFirstName().matches(inOgValue)) {
       inSt.setFirstName(inNewValue);
@@ -164,6 +168,7 @@ public class Node implements SubjectI, ObserverI, Cloneable {
       inSt.setMajor(inNewValue);
 
     } else if (inSt.getSkills().contains(inOgValue)) {
+      inSt.getSkills().remove(inOgValue);
       inSt.getSkills().add(inNewValue);
 
     }
@@ -178,6 +183,7 @@ public class Node implements SubjectI, ObserverI, Cloneable {
    */
   @Override
   public void update(StudentRecord inSt, Operation inOP) {
+    MyLogger.writeMessage("Update call for all observer.", MyLogger.DebugLevel.CONSTRUCTOR);
     // TODO Auto-generated method stub
     if (inOP == Operation.INSERT) {
       updateNode(inSt);
@@ -195,6 +201,7 @@ public class Node implements SubjectI, ObserverI, Cloneable {
    */
   @Override
   public void registerObserver(ObserverI observerI) {
+    MyLogger.writeMessage("Observer regestering.", MyLogger.DebugLevel.CONSTRUCTOR);
     // TODO Auto-generated method stub
     observers.add(observerI);
   }
@@ -207,6 +214,7 @@ public class Node implements SubjectI, ObserverI, Cloneable {
    */
   @Override
   public void notifyAll(Operation op) {
+    MyLogger.writeMessage("Notifying all observer.", MyLogger.DebugLevel.CONSTRUCTOR);
     // TODO Auto-generated method stub
     for (ObserverI observerI : observers) {
       observerI.update(st, op);

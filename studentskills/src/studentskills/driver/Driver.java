@@ -12,6 +12,7 @@ import studentskills.userException.EmptyModifyFileException;
 import studentskills.userException.InvalidInputFormatException;
 import studentskills.util.FileDisplayInterface;
 import studentskills.util.FileProcessor;
+import studentskills.util.MyLogger;
 import studentskills.util.Results;
 import studentskills.util.ResultsI;
 import studentskills.util.StdoutDisplayInterface;
@@ -49,6 +50,8 @@ public class Driver {
                 throw new FileNotFoundException("Missing Modify file parameter!");
 
             }
+            MyLogger.writeMessage("Setting debug level to " + args[6], MyLogger.DebugLevel.DRIVER);
+            MyLogger.setDebugValue(Integer.parseInt(args[6]));
 
             /**
              * Object creation of three trees.
@@ -71,7 +74,7 @@ public class Driver {
              * 
              * @params ResultsI, and three tree objects.
              */
-            TreeHelper tH = new TreeHelper(rs0, rs1, rs2, replica_0, replica_1, replica_2);
+            TreeHelper tH = new TreeHelper(rs0, rs1, rs2, errRs,replica_0, replica_1, replica_2);
 
             /**
              * FileProcessor objects for Input and Modify file
@@ -87,19 +90,31 @@ public class Driver {
              */
             InputDataProcessor iDp = new InputDataProcessor(inputFp, modifyFp, tH, errRs);
 
+            MyLogger.writeMessage("Calling InputFileProcess to process Input file.", MyLogger.DebugLevel.DRIVER);
             // call of the InputFileProcess method in the InputDataprocessor.
             iDp.InputFileProcess();
+
+            MyLogger.writeMessage("Calling ModifyFileProcess to process Modify file.", MyLogger.DebugLevel.DRIVER);
             // call of the ModifyFileProcess method in the InputDataprocessor.
             iDp.ModifyFileProcess();
+
+            MyLogger.writeMessage("Calling storeTreeResult to store tree in result.", MyLogger.DebugLevel.DRIVER);
             // Call of the storeTreeResult method in the InputDataprocessor.
             tH.storeTreeResult();
 
+            MyLogger.writeMessage("Calling printResults to print all trees in Stdout.", MyLogger.DebugLevel.DRIVER);
+            MyLogger.writeMessage("Calling printResultsToFile to print all trees in respective output file.\n", MyLogger.DebugLevel.DRIVER);
             /**
              * printResults method for printing output on terminal
              * 
              * @params Three StdoutDisplayInterface results object.
              */
             printResults((StdoutDisplayInterface) rs0, (StdoutDisplayInterface) rs1, (StdoutDisplayInterface) rs2);
+            /**
+             * printResultsToFile method for printing output in output file.
+             * 
+             * @params Three FileDisplayInterface results object.
+             */
             printResultsToFile((FileDisplayInterface) rs0, (FileDisplayInterface) rs1, (FileDisplayInterface) rs2,
                     (FileDisplayInterface) errRs);
 
@@ -116,8 +131,11 @@ public class Driver {
      * @param arr
      */
     private static void printResults(StdoutDisplayInterface... arr) {
+        int i=0;
         for (StdoutDisplayInterface result : arr) {
+            System.out.println("---------------------------------replica_"+i+" Tree--------------------------------------\n");
             result.writeToStdout();
+            i += 1;
         }
     }
 

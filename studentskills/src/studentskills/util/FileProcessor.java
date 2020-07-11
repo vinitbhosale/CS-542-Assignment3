@@ -33,11 +33,11 @@ public final class FileProcessor {
 	 */
 	public FileProcessor(String inputFilePath)
 			throws InvalidPathException, SecurityException, FileNotFoundException, IOException {
-
+		MyLogger.writeMessage("FileProcessor constructor.", MyLogger.DebugLevel.CONSTRUCTOR);
 		if (!Files.exists(Paths.get(inputFilePath))) {
 			throw new FileNotFoundException("invalid input file or input file in incorrect location");
 		}
-
+		MyLogger.writeMessage("Bufferreader object reader intiatizing.", MyLogger.DebugLevel.CONSTRUCTOR);
 		reader = new BufferedReader(new FileReader(new File(inputFilePath)));
 	}
 
@@ -48,6 +48,7 @@ public final class FileProcessor {
 	 * @exception IOException On error encountered when reading from input file.
 	 */
 	public String poll() throws IOException {
+		MyLogger.writeMessage("Poll method reading one line from file\n", MyLogger.DebugLevel.FILEPROCESSOR);
 		return reader.readLine();
 	}
 
@@ -57,6 +58,7 @@ public final class FileProcessor {
 	 * @exception IOException On error encountered when closing the buffered reader.
 	 */
 	public void close() throws IOException {
+		MyLogger.writeMessage("Closing reader.", MyLogger.DebugLevel.CONSTRUCTOR);
 		reader.close();
 	}
 }

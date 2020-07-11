@@ -1,5 +1,6 @@
 package studentskills.mytree;
 
+import studentskills.util.MyLogger;
 import studentskills.util.ResultsI;
 
 /**
@@ -15,6 +16,7 @@ public class Tree {
 
     // Tree constructor to set root for each tree.
     public Tree() {
+        MyLogger.writeMessage("Tree constructor.", MyLogger.DebugLevel.CONSTRUCTOR);
         root = null;
     }
 
@@ -24,6 +26,7 @@ public class Tree {
      * @param inNode - student record node.
      */
     public void insertStudent(Node inNode) {
+        MyLogger.writeMessage("Inserting student node in tree.", MyLogger.DebugLevel.TREE);
         root = insert(root, inNode);
     }
 
@@ -65,7 +68,7 @@ public class Tree {
      * @return - searchKey node if found or Null.
      */
     public Node search(int inBkey) {
-
+        MyLogger.writeMessage("Searching student node in tree.", MyLogger.DebugLevel.TREE);
         Node searchKey = root;
         while (searchKey != null) {
             if (searchKey.getBNumKey() == inBkey) {
@@ -86,6 +89,7 @@ public class Tree {
      * @param rs - ResultsI obj to store result.
      */
     public void printNodes(ResultsI rs) {
+        MyLogger.writeMessage("Printing student node of tree.\n", MyLogger.DebugLevel.TREE);
         inorder(root, rs);
     }
 
