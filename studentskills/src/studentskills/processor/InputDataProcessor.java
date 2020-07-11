@@ -104,7 +104,13 @@ public class InputDataProcessor {
                 // List creation for adding value after(:).
                 ArrayList<String> innerValue = new ArrayList<String>();
                 for (String value : keyAndValue[1].split(",")) {
-                    innerValue.add(value);
+                    if (value.equals(" ")) {
+                        throw new InvalidInputFormatException(
+                                "Invalid Input! Line in the input file does not follow the specified format.");
+                    } else {
+                        innerValue.add(value);
+                    }
+
                 }
                 // Assigning values of the list.
                 firstName = innerValue.get(0);
@@ -173,7 +179,13 @@ public class InputDataProcessor {
 
                 ArrayList<String> ModInnerValue = new ArrayList<String>();
                 for (String value : keyAndValue[0].split(",")) {
-                    ModInnerValue.add(value);
+                    if (value.equals(" ")) {
+                        throw new InvalidInputFormatException(
+                                "Invalid Input! Line in the modify file does not follow the specified format.");
+                    } else {
+                        ModInnerValue.add(value);
+                    }
+
                 }
                 replicaNum = ModInnerValue.get(0);
                 ModBNumber = Integer.parseInt(ModInnerValue.get(1));
@@ -184,7 +196,14 @@ public class InputDataProcessor {
                 if (bNumber < 0 && ModBNumberLen > 4) {
                     throw new ErroFileException(bNumber + " Negative Bnumber/Bnumber more than 4 digit!");
                 }
-                origValue = ModInnerValue.get(2);
+                if (ModInnerValue.get(2).isEmpty()) {
+                    throw new InvalidInputFormatException(
+                            "Invalid Input! Line in the modify file does not follow the specified format.");
+
+                } else {
+                    origValue = ModInnerValue.get(2);
+                }
+
                 MyLogger.writeMessage("Sending value to update student record node in tree.\n",
                         MyLogger.DebugLevel.INPUTDATAPROCESSOR);
                 tH.updateNode(replicaNum, ModBNumber, origValue, newValue);
@@ -199,7 +218,7 @@ public class InputDataProcessor {
         }
 
     }
-    
+
     public void generateOutput() {
         tH.storeTreeResult();
     }
