@@ -1,5 +1,16 @@
 package studentskills.util;
-
+/**
+ * MyLogger class
+ * 
+ * DebugValue = 1 (For DRIVER class)
+ * DebugValue = 2 (For CONSTRUCTOR)
+ * DebugValue = 3 (For FILEPROCESSOR class)
+ * DebugValue = 4 (For INPUTDATAPROCESSOR class)
+ * DebugValue = 5 (For TREEHELPER class)
+ * DebugValue = 6 (For TREE class)
+ * DebugValue = 7 (For NODE class)
+ * DebugValue = 8 (For RESULTS class)
+ */
 public class MyLogger {
 
     public static enum DebugLevel {
