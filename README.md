@@ -1,6 +1,6 @@
 
 # CSX42: Assignment 3
-**Name:Vint Surendre Bhosale** 
+**Name:Vint Surendra Bhosale** 
 
 -----------------------------------------------------------------------
 
