@@ -104,8 +104,7 @@ public class Tree {
         if (root != null) {
             // recursive call of inorder method.
             inorder(root.getLeftNode(), rs);
-            rs.storeResult(root.getBNumKey() + ":" + root.getFirstName() + "," + root.getLastName() + ","
-                    + root.getGpa() + "," + root.getMajor() + "," + root.getSkills());
+            rs.storeResult(root.getBNumKey() + ":" + root.getSkills());
             // recursive call of inorder method.
             inorder(root.getRightNode(), rs);
 
