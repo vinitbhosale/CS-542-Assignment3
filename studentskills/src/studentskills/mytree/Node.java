@@ -1,6 +1,5 @@
 package studentskills.mytree;
 
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -8,63 +7,89 @@ import java.util.Set;
 
 import studentskills.operation.Operation;
 
+/**
+ * Node class that implements SubjectI, ObserverI, Cloneable interface and
+ * implements methods of all interfaces.
+ */
 public class Node implements SubjectI, ObserverI, Cloneable {
 
   private Node left;
   private Node right;
+  // Intializing of Set for unique skills.
   Set<String> skills = new HashSet<>();
+  // Intializing of List to store Observers.
   public List<ObserverI> observers = new ArrayList<>();
+  // Intializing of StudentRecord obj.
   private StudentRecord st;
 
+  /**
+   * Node methode to create student record node.
+   * 
+   * @param inSt - StudentRecord obj
+   */
   public Node(StudentRecord inSt) {
     st = inSt;
     this.left = this.right = null;
   }
 
   /**
-   * @return
+   * getBNumKey method to get students bnumber.
+   * 
+   * @return - bnumber
    */
   public int getBNumKey() {
     return st.getBNumKey();
   }
 
   /**
-   * @return
+   * getFirstName method to get students first name.
+   * 
+   * @return firstname
    */
   public String getFirstName() {
     return st.getFirstName();
   }
 
   /**
-   * @return
+   * getLastName method to get student last name.
+   * 
+   * @return lastname
    */
   public String getLastName() {
     return st.getLastName();
   }
 
   /**
-   * @return
+   * getGpa methoed to get students gpa.
+   * 
+   * @return - gpa
    */
   public double getGpa() {
     return st.getGpa();
   }
 
   /**
-   * @return
+   * getMajor method to get students major.
+   * 
+   * @return - major
    */
   public String getMajor() {
     return st.getMajor();
   }
 
   /**
-   * @return
+   * getSkills method to get students skill.
+   * 
+   * @return - skills
    */
   public Set<String> getSkills() {
     return st.getSkills();
   }
 
   /**
-   * @return
+   * getLeftNode method to get left node
+   * 
+   * @return - left
    */
   public Node getLeftNode() {
     return left;
@@ -74,14 +99,15 @@ public class Node implements SubjectI, ObserverI, Cloneable {
    * sets left node
    * 
    * @param left
-   * @return
    */
   public void setLeft(Node left) {
     this.left = left;
   }
 
   /**
-   * @return
+   * getRightNode method to get right node
+   * 
+   * @return - right
    */
   public Node getRightNode() {
     return right;
@@ -96,17 +122,38 @@ public class Node implements SubjectI, ObserverI, Cloneable {
     this.right = right;
   }
 
-  public StudentRecord gStudentRecord() {
+  /**
+   * getStudentRecord method to get student record.
+   * 
+   * @return - student record
+   */
+  public StudentRecord getStudentRecord() {
     return st;
   }
 
+  /**
+   * updateNode method to update student record.
+   * 
+   * @param inSt - student record
+   */
   public void updateNode(StudentRecord inSt) {
+    // fetch old values of skills
     skills = st.getSkills();
+    // update the student
     st = inSt;
+    // add old values to new values.
     st.getSkills().addAll(skills);
   }
 
+  /**
+   * replaceValue method to replace values of student record from modify file
+   * 
+   * @param inSt       - student record
+   * @param inOgValue  - original value in student record
+   * @param inNewValue - new value
+   */
   public void replaceValue(StudentRecord inSt, String inOgValue, String inNewValue) {
+    // Condition to check which value to change
     if (inSt.getFirstName().matches(inOgValue)) {
       inSt.setFirstName(inNewValue);
 
@@ -123,6 +170,12 @@ public class Node implements SubjectI, ObserverI, Cloneable {
 
   }
 
+  /**
+   * update method to udpate all the observers node of tree.
+   * 
+   * @param inSt - student record
+   * @param inOP - Operation INSERT/MODIFY
+   */
   @Override
   public void update(StudentRecord inSt, Operation inOP) {
     // TODO Auto-generated method stub
@@ -135,12 +188,23 @@ public class Node implements SubjectI, ObserverI, Cloneable {
 
   }
 
+  /**
+   * registerObserver method that add observers of nodes in observers list.
+   * 
+   * @param observerI - ObserverI obj
+   */
   @Override
   public void registerObserver(ObserverI observerI) {
     // TODO Auto-generated method stub
     observers.add(observerI);
   }
 
+  /**
+   * notifyAll method that notify all the observers in the observers list that
+   * implements update method to update the respective node.
+   * 
+   * @param op - Operation INSERT/MODIFY
+   */
   @Override
   public void notifyAll(Operation op) {
     // TODO Auto-generated method stub
@@ -149,10 +213,22 @@ public class Node implements SubjectI, ObserverI, Cloneable {
     }
   }
 
+  /**
+   * clone method that clones the student record node.
+   * 
+   * @return cloneNode
+   */
   @Override
   public Node clone() {
-    Node oldNode = new Node(st);
-    return oldNode;
+    Node cloneNode = new Node(st);
+    return cloneNode;
+  }
+
+  @Override
+  public String toString() {
+    return "Class: Node, Data Members: [left=" + left.toString() + ", right=" + right.toString() + ", skills="
+        + skills.toString() + ", observers=" + observers.toString() + ", st=" + st.toString() + "]";
+
   }
 
 }

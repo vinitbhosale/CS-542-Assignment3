@@ -52,7 +52,7 @@
     <arg value="${output2}"/> <!-- output2 file -->
     <arg value="${output3}"/> <!-- output3 file -->
     <arg value="${error}"/> <!-- error file -->
-    <arg value="${debug}"/> <!-- debug file -->
+    <arg value="${debug}"/> <!-- debug value -->
         </java>	
     </target>
 
